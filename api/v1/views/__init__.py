@@ -10,3 +10,4 @@ from .states import *
 from .cities import *
 from .amenities import *
 from .states import *
+from .users import *
