@@ -62,7 +62,7 @@ def state_by_id(state_id):
             abort(400, 'Not a JSON')
 
         for key, value in json_data.items():
-            if key != 'id' or key != 'created_at' or key != 'updated_at':
+            if key != 'id' and key != 'created_at' and key != 'updated_at':
                 if hasattr(state, key):
                     setattr(state, key, value)
         storage.save()
