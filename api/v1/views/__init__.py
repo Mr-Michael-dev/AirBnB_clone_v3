@@ -12,4 +12,3 @@ from .amenities import *
 from .users import *
 from .places import *
 from .places_reviews import *
-

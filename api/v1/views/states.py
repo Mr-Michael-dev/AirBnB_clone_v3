@@ -15,11 +15,11 @@ def states():
     """
     if request.method == 'POST':
         json_data = request.get_json()
-        if not json_data:
-            abort(400, 'Not a JSON')
+        if not json_data or type(json_data) is not dict:
+            return jsonify({'error': 'Not a JSON'}), 400
 
         if 'name' not in json_data:
-            abort(400, 'Missing name')
+            return jsonify({'error': 'Missing name'}), 400
 
         new_state = State(**json_data)
         storage.new(new_state)
@@ -57,8 +57,8 @@ def state_by_id(state_id):
             abort(404)
 
         json_data = request.get_json()
-        if not json_data:
-            abort(400, 'Not a JSON')
+        if not json_data or type(json_data) is not dict:
+            return jsonify({'error': 'Not a JSON'}), 400
 
         for key, value in json_data.items():
             if key != 'id' and key != 'created_at' and key != 'updated_at':

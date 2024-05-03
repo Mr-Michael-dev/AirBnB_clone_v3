@@ -15,11 +15,10 @@ def amenities():
     """
     if request.method == 'POST':
         json_data = request.get_json()
-        if not json_data:
-            abort(400, 'Not a JSON')
-
+        if not json_data or type(json_data) is not dict:
+            return jsonify({'error': 'Not a JSON'}), 400
         if 'name' not in json_data:
-            abort(400, 'Missing name')
+            return jsonify({'error': 'Missing name'}), 400
 
         new_amenity = Amenity(**json_data)
         storage.new(new_amenity)
@@ -38,7 +37,7 @@ def amenities():
                  methods=['GET', 'DELETE', 'PUT'])
 def amenity_by_id(amenity_id):
     """
-    retrieves a amenity by its id using GET method
+    retrieves an amenity by its id using GET method
     deletes a amenity by id using DELETE method
     updates a amenity data by id using PUT
     """
@@ -53,8 +52,8 @@ def amenity_by_id(amenity_id):
         return jsonify({}), 200
     elif request.method == 'PUT':
         json_data = request.get_json()
-        if not json_data:
-            abort(400, 'Not a JSON')
+        if not json_data or type(json_data) is not dict:
+            return jsonify({'error': 'Not a JSON'}), 400
 
         for key, value in json_data.items():
             if key not in ['id', 'created_at', 'updated_at']:
